@@ -29,7 +29,7 @@ import io.swagger.annotations.ApiParam;
 public class TaskManagerController {
 
 	
-	private static final Logger logger = LogManager.getLogger(TaskManagerController.class);
+	private static final Logger LOGGER = LogManager.getLogger(TaskManagerController.class);
 	 
 	@Autowired
 	private TaskManagerService taskManagerService;
@@ -37,7 +37,7 @@ public class TaskManagerController {
 	@RequestMapping(method = RequestMethod.POST, path = "/task", produces = "application/json")
 	@ApiOperation("Create a new Task.")
 	public TaskResponse createTask(@Valid @RequestBody Task task) {
-		logger.info(" Creating New task {} " , task);
+		LOGGER.info(" Creating New task {} " , task);
 		taskManagerService.createTask(task);
 		return new TaskResponse(HttpStatus.CREATED.value());
 	}
@@ -46,7 +46,7 @@ public class TaskManagerController {
 	@ApiOperation("Update Task as Completed.")
 	public TaskResponse completeTask(@PathVariable(value = "taskId") String taskId,@Valid @RequestBody Task task) throws ResourceNotFoundException {
 		task.setTaskId(taskId);
-		logger.info(" updating task as completed {} " , task);
+		LOGGER.info(" updating task as completed {} " , task);
 		taskManagerService.completeTask(task);
 		return new TaskResponse(HttpStatus.OK.value());
 	}
@@ -55,7 +55,7 @@ public class TaskManagerController {
 	@ApiOperation("Update Task.")
 	public ResponseEntity<Task> updateTask(@PathVariable(value = "taskId") String taskId,
 			@Valid @RequestBody Task task) throws ResourceNotFoundException {
-		logger.info(" updating task  {} " , task);
+		LOGGER.info(" updating task  {} " , task);
 		taskManagerService.updateTask(task);
 		return ResponseEntity.ok(task);
 	}
@@ -65,7 +65,7 @@ public class TaskManagerController {
 	@ApiOperation("Returns list of all Task in the system.")
 	public List<Task> getAllTask() {
 		List<Task> taskList = taskManagerService.findAllTaskWithDetail();
-		logger.info(" All Task List {} " , taskList);
+		LOGGER.info(" All Task List {} " , taskList);
 		return taskList;
 	}
 	
@@ -73,7 +73,7 @@ public class TaskManagerController {
 	@ApiOperation("Returns list of all Task in the system.")
 	public List<Task> findAllTaskWithTaskIdAndName() {
 		List<Task> taskList = taskManagerService.findAllTaskWithTaskIdAndName();
-		logger.info(" All Task List {} " , taskList);
+		LOGGER.info(" All Task List {} " , taskList);
 		return taskList;
 	}
 
@@ -83,7 +83,7 @@ public class TaskManagerController {
 			@ApiParam("task Id of the task to be obtained. Cannot be empty.") @PathVariable(value = "taskId") String taskId)
 			throws ResourceNotFoundException {
 		Task task = taskManagerService.findTaskByTaskId(taskId);
-		logger.info(" getTaskById - Task {} " , task);
+		LOGGER.info(" getTaskById - Task {} " , task);
 		return ResponseEntity.ok().body(task);
 	}
 

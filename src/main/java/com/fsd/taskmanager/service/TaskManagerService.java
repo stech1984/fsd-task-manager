@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.fsd.taskmanager.common.TaskStatusEnum;
-import com.fsd.taskmanager.controller.TaskManagerController;
 import com.fsd.taskmanager.db.entiry.TaskDetail;
 import com.fsd.taskmanager.db.repository.TaskDetailRepository;
 import com.fsd.taskmanager.exception.ResourceNotFoundException;
@@ -23,11 +22,8 @@ import com.fsd.taskmanager.view.transformer.TaskTransformer;
 @Component
 public class TaskManagerService {
 
-	// @Autowired
-	// private ParentTaskRepository parentTaskRepository;
 	
-	
-	private static final Logger logger = LogManager.getLogger(TaskManagerService.class);
+	private static final Logger LOGGER = LogManager.getLogger(TaskManagerService.class);
 
 
 	@Autowired
@@ -44,7 +40,7 @@ public class TaskManagerService {
 	public void createTask(Task task) {
 		// convert task into task detail
 		TaskDetail taskDetail = taskTransformer.transformTaskModelToTaskEntity(task);
-		logger.debug(" Creating new Task [] " , taskDetail);
+		LOGGER.debug(" Creating new Task [] " , taskDetail);
 		// Store task Details
 		taskDetail = taskDetailRepository.save(taskDetail);
 		// Store parent and child Task
